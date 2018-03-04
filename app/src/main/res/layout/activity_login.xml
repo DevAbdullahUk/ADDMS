@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.capstone.ako.addms.Login">
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/loginbackgroung"
+
+        />
+
+    <!--this layout has all the comments -->
+    <RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    >
+
+    <!--This is the title for the login-->
+    <LinearLayout
+        android:id="@+id/titleLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+        <TextView
+            android:layout_width="15dp"
+            android:layout_height="50dp"
+            android:background="@color/login_titleColor"
+            />
+        <TextView
+            android:layout_width="220dp"
+            android:layout_height="60dp"
+            android:text="@string/login_title"
+            android:textColor="@color/login_titleTextColor"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:layout_marginLeft="3dp"
+            />
+    </LinearLayout>
+
+    <!--This is the login layout-->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="35dp"
+        android:layout_below="@+id/titleLayout"
+        android:background="@color/whitColor"
+        >
+        <!--This is sign up and login-->
+        <LinearLayout
+            android:paddingTop="20dp"
+            android:gravity="center"
+            android:id="@+id/loginSignupLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:id="@+id/login"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:text="LOGIN"
+                android:textColor="@color/login_titleTextColor"
+                android:textSize="15dp"
+                android:background="@drawable/bt_with_border"
+                android:onClick="login"
+                />
+            <TextView
+                android:id="@+id/signup"
+                android:layout_width="wrap_content"
+                android:layout_height="25dp"
+                android:text="SIGNUP"
+                android:textSize="15dp"
+                android:layout_marginLeft="30dp"
+                android:textColor="@color/login_titleTextColor"
+                />
+        </LinearLayout>
+
+        <!--this layout for the user inputs-->
+        <EditText
+            android:layout_marginTop="45dp"
+            android:layout_width="220dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:hint="USERNAME"
+            />
+
+        <EditText
+            android:layout_marginTop="10dp"
+            android:layout_width="220dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:hint="PASSWORD"
+            android:inputType="textPassword"
+            />
+
+        <EditText
+            android:id="@+id/email"
+            android:layout_marginTop="10dp"
+            android:layout_width="220dp"
+            android:layout_height="45dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:hint="EMAIL ADDRESS"
+            android:inputType="textEmailAddress"
+            android:visibility="invisible"
+            />
+
+        <Button
+            android:layout_marginTop="55dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginLeft="0dp"
+            android:layout_marginRight="0dp"
+            android:background="@color/yellColor"
+            android:text="Submit"
+            android:textColor="@color/login_titleTextColor"
+            android:onClick="nextScreen"
+            ></Button>
+
+    </LinearLayout>
+
+
+</RelativeLayout>
+
+
+</RelativeLayout>
