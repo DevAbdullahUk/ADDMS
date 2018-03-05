@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.capstone.ako.addms.accountHomePage"
-    android:orientation="vertical"
-    >
+    android:orientation="vertical">
+
     <!--Top screen information -->
 <LinearLayout
     android:layout_width="match_parent"
@@ -95,14 +96,233 @@
 </LinearLayout>
 
     <!--Screen body layout -->
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingTop="20dp"
         android:gravity="center"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
         >
+        <!-- Alerts -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shadow"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="30dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon_d" />
+
+            <TextView
+                android:layout_width="2dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="30dp"
+                android:background="#e0e0eb"
+                android:textSize="15dp" />
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="Number of Alerts"
+                android:gravity="start"
+                android:textColor="@color/login_titleTextColor"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="30dp"
+                android:background="#e0e0eb"
+                android:paddingTop="7dp"
+                android:text="2"
+                android:textAlignment="center"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="24sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+
+        </LinearLayout>
+
+        <!-- Speed -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shadow"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="30dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon_a" />
+
+            <TextView
+                android:layout_width="2dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="30dp"
+                android:background="#e0e0eb"
+                android:textSize="15dp" />
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="Average Speed"
+                android:gravity="start"
+                android:textColor="@color/login_titleTextColor"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="30dp"
+                android:background="#e0e0eb"
+                android:text="100 \nkm/h"
+                android:textAlignment="center"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="18sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+
+        </LinearLayout>
+
+        <!-- Time -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shadow"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="30dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon_c" />
+
+            <TextView
+                android:layout_width="2dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="30dp"
+                android:background="#e0e0eb"
+                android:textSize="15dp" />
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="Trip Time"
+                android:gravity="start"
+                android:textColor="@color/login_titleTextColor"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="30dp"
+                android:background="#e0e0eb"
+                android:text="39 \n min."
+                android:textAlignment="center"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="18sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+
+        </LinearLayout>
+
+        <!-- Distance -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shadow"
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="30dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/icon_b" />
+
+            <TextView
+                android:layout_width="2dp"
+                android:layout_height="35dp"
+                android:layout_marginLeft="30dp"
+                android:background="#e0e0eb"
+                android:textSize="15dp" />
+
+            <TextView
+                android:layout_width="121dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:text="Covered Distance"
+                android:textAlignment="center"
+                android:textColor="@color/login_titleTextColor"
+                android:textSize="15dp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="60dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="30dp"
+                android:background="#e0e0eb"
+                android:text="55 \nkm"
+                android:textAlignment="center"
+                android:textColor="@android:color/holo_red_dark"
+                android:textSize="18sp"
+                android:textStyle="bold">
+
+            </TextView>
+
+
+        </LinearLayout>
+        <!-- Start Driving Button -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp"
+            android:gravity="bottom"
+            android:orientation="horizontal">
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@color/yellColor"
+                android:text="Start Driving"
+                android:textColor="@color/login_titleTextColor"
+                >
+
+            </Button>
+        </LinearLayout>
 
     </LinearLayout>
+    </ScrollView>
+
 </LinearLayout>
+

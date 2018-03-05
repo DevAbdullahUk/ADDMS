@@ -128,7 +128,9 @@
             android:text="Submit"
             android:textColor="@color/login_titleTextColor"
             android:onClick="nextScreen"
-            ></Button>
+            >
+
+        </Button>
 
     </LinearLayout>
 
