@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent"
+    android:theme="@style/accountScren"
+    >
+    <!--This is the outer layout for all of other layouts-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background"
+        android:orientation="vertical"
+        android:layout_marginBottom="50dp"
+        android:gravity="center"
+        >
+        <!--Both of the TextView only for look-->
+        <TextView
+            android:layout_width="270dp"
+            android:layout_height="20dp"
+            android:background="@color/whitVeryLight"
+            />
+        <TextView
+            android:layout_width="290dp"
+            android:layout_height="20dp"
+            android:background="@color/whitLoght"
+            />
+        <!--This layout for the inputs Account-->
+        <LinearLayout
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/whitColor"
+            >
+            <!--This is ACCOUNT and PARENTS-->
+            <LinearLayout
+                android:paddingTop="20dp"
+                android:gravity="center"
+                android:id="@+id/loginSignupLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:onClick="moveScreen"
+                    android:id="@+id/account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:text="ACCOUNT"
+                    android:textColor="@color/login_titleTextColor"
+                    android:textSize="15dp"
+                    />
+                <TextView
+                    android:background="@drawable/bt_with_border"
+                    android:id="@+id/parents"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:text="PARENTS"
+                    android:textSize="15dp"
+                    android:layout_marginLeft="30dp"
+                    android:textColor="@color/login_titleTextColor"
+                    />
+            </LinearLayout>
+
+            <!--All the parents names layout-->
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="290dp"
+                android:layout_marginTop="10dp">
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/accountLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="290dp"
+                    android:orientation="vertical"
+                    >
+
+
+                </LinearLayout>
+            </ScrollView>
+
+            <!--Add a new parents to the list layout-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/whitDark"
+                >
+                <EditText
+                    android:id="@+id/parentsUserName"
+                    android:layout_width="220dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_horizontal"
+                    android:hint="USERNAME"
+                    />
+                <Button
+                    android:onClick="AddParents"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@color/login_titleColor"
+                    android:text="ADD"
+                    android:textColor="@color/whitColor"
+                    android:layout_alignParentBottom="true"
+                    >
+                </Button>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/yellColor"
+        android:text="Submit"
+        android:textColor="@color/login_titleTextColor"
+        android:layout_alignParentBottom="true"
+        >
+    </Button>
+</RelativeLayout>

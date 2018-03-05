@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.capstone.ako.addms.accountScreen"
+    android:background="@color/colorAccent"
+    >
+    <!--This is the outer layout for all of other layouts-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background"
+        android:orientation="vertical"
+        android:layout_marginBottom="50dp"
+        android:gravity="center"
+        >
+        <!--Both of the TextView only for look-->
+        <TextView
+        android:layout_width="270dp"
+        android:layout_height="20dp"
+        android:background="@color/whitVeryLight"
+        />
+        <TextView
+            android:layout_width="290dp"
+            android:layout_height="20dp"
+            android:background="@color/whitLoght"
+        />
+        <!--This layout for the inputs Account-->
+        <LinearLayout
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@color/whitColor"
+            >
+            <!--This is ACCOUNT and PARENTS-->
+            <LinearLayout
+                android:paddingTop="20dp"
+                android:gravity="center"
+                android:id="@+id/loginSignupLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+                <TextView
+                    android:id="@+id/account"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:text="ACCOUNT"
+                    android:textColor="@color/login_titleTextColor"
+                    android:textSize="15dp"
+                    android:background="@drawable/bt_with_border"
+                    />
+                <TextView
+                    android:onClick="moveScreen"
+                    android:id="@+id/parents"
+                    android:layout_width="wrap_content"
+                    android:layout_height="25dp"
+                    android:text="PARENTS"
+                    android:textSize="15dp"
+                    android:layout_marginLeft="30dp"
+                    android:textColor="@color/login_titleTextColor"
+                    />
+            </LinearLayout>
+
+            <!--All the account inputs layout-->
+            <LinearLayout
+                android:id="@+id/accountLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+
+                >
+            <EditText
+                android:layout_marginTop="45dp"
+                android:layout_width="220dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center_horizontal"
+                android:hint="USERNAME"
+                />
+
+            <EditText
+                android:layout_marginTop="10dp"
+                android:layout_width="220dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center_horizontal"
+                android:hint="OLD PASSWORD"
+                android:inputType="textPassword"
+                />
+            <EditText
+                android:layout_marginTop="10dp"
+                android:layout_width="220dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center_horizontal"
+                android:hint="NEW PASSWORD"
+                android:inputType="textPassword"
+                />
+            <EditText
+                android:id="@+id/email"
+                android:layout_marginTop="10dp"
+                android:layout_width="220dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center_horizontal"
+                android:hint="EMAIL ADDRESS"
+                android:inputType="textEmailAddress"
+                />
+                <Button
+                    android:layout_marginTop="35dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@color/RedFocus"
+                    android:text="DELETE ACCOUNT"
+                    android:textColor="@color/whitColor"
+                    >
+
+                </Button>
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/yellColor"
+        android:text="Submit"
+        android:textColor="@color/login_titleTextColor"
+        android:layout_alignParentBottom="true"
+        >
+    </Button>
+
+</RelativeLayout>
