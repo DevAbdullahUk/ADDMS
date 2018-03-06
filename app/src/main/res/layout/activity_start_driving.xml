@@ -161,7 +161,7 @@
             style="?android:attr/borderlessButtonStyle"
             android:background="@color/yellColor"
             android:onClick="home"
-            android:textColor="#808080"/>
+            android:textColor="@color/login_titleTextColor"/>
     </LinearLayout>
 
 
