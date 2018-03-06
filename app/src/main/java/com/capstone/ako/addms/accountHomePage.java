@@ -16,4 +16,6 @@ public class accountHomePage extends AppCompatActivity {
     public void account(View view) {
         startActivity(new Intent(accountHomePage.this, accountScreen.class));
     }
+
+
 }

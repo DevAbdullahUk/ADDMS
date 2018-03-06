@@ -16,12 +16,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".accountHomePage"
-            android:theme="@style/accountScren"></activity>
-        <activity
-            android:name=".accountScreen"
-            android:theme="@style/accountScren"></activity>
+        <activity android:name=".accountHomePage"
+
+            android:theme="@style/accountScren"
+            >
+
+
+        </activity>
     </application>
 
 </manifest>

@@ -3,4 +3,9 @@
     <string name="login_title">Driver Distraction Mitigation System
   </string>
     <string name="screenInfo">Click on \n <b>Start trip</b> \nIn order to\nStart monitoring </string>
+    <string name="cSpeed">Current Speed</string>
+    <string name="SI_km_h">km/h</string>
+    <string name="sLimit">Speed Limit</string>
+    <string name="dCovered">Distance\nCovered</string>
+    <string name="eTime">Elapsed Time</string>
 </resources>

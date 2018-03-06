@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.capstone.ako.addms.startDriving">
+
+<!-- Layout for the current speed and speed limit -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/BlueColor"
+        android:gravity="center"
+        android:paddingBottom="40dp"
+        android:paddingTop="40dp">
+        <!-- layout for the current speed display -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingRight="35dp"
+            android:paddingLeft="10dp"
+            android:background="@drawable/right_border">
+            <TextView
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:text="@string/cSpeed"
+                android:textSize="17sp"
+                android:textColor="#D3D0D0"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="70"
+                android:textSize="55sp"
+                android:textColor="@color/whitColor"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/SI_km_h"
+                android:textColor="@color/whitColor"
+                android:layout_gravity="right"
+                android:textSize="15sp"/>
+
+        </LinearLayout>
+
+        <!--Layout for speed limit display -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="35dp"
+            android:paddingRight="10dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sLimit"
+                android:textColor="#D3D0D0"
+                android:textSize="17sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="80"
+                android:textSize="55sp"
+                android:textColor="#FFFF50"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/SI_km_h"
+                android:textColor="@color/whitColor"
+                android:textSize="15sp"
+                android:layout_gravity="right"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <!--Layout for distance covered and time elapsed -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        android:paddingTop="60dp"
+        >
+
+        <!-- Layout for the distance covered display -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingRight="30dp"
+            android:paddingLeft="5dp">
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/dCovered"
+                android:textSize="17sp"
+                android:paddingBottom="10dp"
+                android:background="@drawable/bottom_grey_border"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="50"
+                android:textSize="55sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="km"
+                android:textSize="15sp"
+                android:layout_gravity="end"/>
+        </LinearLayout>
+
+        <!--Layout for elapsed time display -->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="30dp"
+            android:paddingRight="5dp">
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/eTime"
+                android:textSize="17sp"
+                android:paddingBottom="10dp"
+                android:background="@drawable/bottom_grey_border"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="25"
+                android:textSize="55sp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="min"
+                android:textSize="15sp"
+                android:layout_gravity="end"/>
+        </LinearLayout>
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:gravity="center|bottom">
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Stop Driving"
+            style="?android:attr/borderlessButtonStyle"
+            android:background="@color/yellColor"
+            android:onClick="home"
+            android:textColor="#808080"/>
+    </LinearLayout>
+
+
+</LinearLayout>
