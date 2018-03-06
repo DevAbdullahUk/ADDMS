@@ -18,4 +18,7 @@ public class accountHomePage extends AppCompatActivity {
     }
 
 
+    public void drivingScreen(View view) {
+        startActivity(new Intent(accountHomePage.this, startDriving.class));
+    }
 }

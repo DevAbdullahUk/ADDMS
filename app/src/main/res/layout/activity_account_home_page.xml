@@ -318,6 +318,7 @@
                 android:layout_height="50dp"
                 android:background="@color/yellColor"
                 android:text="Start Driving"
+                android:onClick="drivingScreen"
                 android:textColor="@color/login_titleTextColor"
                 >
             </Button>
