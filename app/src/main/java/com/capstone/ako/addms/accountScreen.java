@@ -3,6 +3,7 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -10,7 +11,7 @@ import android.widget.TextView;
 
 public class accountScreen extends AppCompatActivity {
     // On screen components activity_account_screen2.xml
-    TextView parentsUserName ;
+    TextView parentsUserName;
     LinearLayout accountLayout, selectedParentsNameLayout;
 
     @Override
@@ -37,8 +38,11 @@ public class accountScreen extends AppCompatActivity {
      */
     public void AddParents(View view) {
         parentsUserName = (TextView) findViewById(R.id.parentsUserName);
-        AddParentsList (parentsUserName.getText().toString());
-        parentsUserName.setText("");
+
+            AddParentsList(parentsUserName.getText().toString());
+            parentsUserName.setText("");
+
+
     }
 
     /*
@@ -47,7 +51,7 @@ public class accountScreen extends AppCompatActivity {
   create a new layout with a TextView before adding them to parentsUserName
   linear layout
    */
-    public void AddParentsList (String Name ){
+    public void AddParentsList (String Name){
         accountLayout = (LinearLayout) findViewById(R.id.accountLayout);
         LinearLayout parentsNameLayout = new LinearLayout(this);
         parentsNameLayout.setId((int )(Math.random() * 10000 + 10));
