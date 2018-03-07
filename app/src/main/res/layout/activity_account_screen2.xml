@@ -100,7 +100,6 @@
                     android:background="@color/login_titleColor"
                     android:text="ADD"
                     android:textColor="@color/whitColor"
-                    android:layout_alignParentBottom="true"
                     >
                 </Button>
             </LinearLayout>

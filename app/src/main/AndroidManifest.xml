@@ -24,7 +24,9 @@
 
         <activity android:name=".accountScreen"
             android:theme="@style/accountScren"
+            android:windowSoftInputMode="adjustPan">
             >
+
         </activity>
 
         <activity android:name=".startDriving"

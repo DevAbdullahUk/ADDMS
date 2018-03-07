@@ -247,7 +247,7 @@
                 android:layout_height="50dp"
                 android:layout_marginLeft="30dp"
                 android:background="#e0e0eb"
-                android:text="39 \n min."
+                android:text="39 \n min"
                 android:textAlignment="center"
                 android:textColor="@android:color/holo_red_dark"
                 android:textSize="18sp"

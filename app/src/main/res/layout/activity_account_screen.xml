@@ -72,13 +72,17 @@
                 android:orientation="vertical"
 
                 >
-            <EditText
-                android:layout_marginTop="45dp"
-                android:layout_width="220dp"
-                android:layout_height="45dp"
-                android:layout_gravity="center_horizontal"
-                android:hint="USERNAME"
-                />
+
+                <TextView
+                    android:layout_width="220dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="45dp"
+                    android:textSize="18sp"
+                    android:textColor="#A0A0A0"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="2dp"
+                    android:text="USERNAME" />
 
             <EditText
                 android:layout_marginTop="10dp"
