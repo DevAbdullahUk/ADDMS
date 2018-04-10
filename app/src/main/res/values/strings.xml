@@ -8,4 +8,21 @@
     <string name="sLimit">Speed Limit</string>
     <string name="dCovered">Distance\nCovered</string>
     <string name="eTime">Elapsed Time</string>
+    <string-array name="speed100">
+        <item >King Fahd Rd</item>
+        <item >Makkah Rd</item>
+        <item >Khurais Rd</item>
+        <item >King Abdullah Rd</item>
+        <item >Eastern Ring Rd</item>
+        <item >Southern Ring Rd</item>
+        <item >Northern Ring Rd</item>
+        <item >Al Kharj Rd</item>
+        <item >Dammam Rd</item>
+        <item >King Khalid Rd</item>
+        <item >King Salman Rd</item>
+        <item >King Abdulaziz Rd</item>
+        <item >Airport Rd</item>
+        <item >Western Ring Rd</item>
+    </string-array>
+
 </resources>
