@@ -26,6 +26,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class startDriving extends AppCompatActivity implements LocationListener {
+
     // Components form the XML
     TextView elapsedTime, speedLimit, distanceCovered, currentSpeed;
     // for the GPS connection
