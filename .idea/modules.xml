@@ -3,10 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/ADDMS.iml" filepath="$PROJECT_DIR$/ADDMS.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ADDMS.iml" filepath="$PROJECT_DIR$/ADDMS.iml" />
-      <module fileurl="file://D:/Capstone/ADDMS.iml" filepath="D:/Capstone/ADDMS.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../../../khalil/AndroidStudioProjects/ADDMS/Capstone.iml" filepath="$PROJECT_DIR$/../../../../khalil/AndroidStudioProjects/ADDMS/Capstone.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

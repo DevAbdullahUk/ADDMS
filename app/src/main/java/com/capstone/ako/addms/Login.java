@@ -86,6 +86,7 @@ public class Login extends AppCompatActivity {
     }
 
 
+    /** called when user trys to login into the application */
     public void nextScreen(View view) {
         userName = (EditText) findViewById(R.id.edt_User);
         password = (EditText) findViewById(R.id.edt_Pass);
