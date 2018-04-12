@@ -88,23 +88,23 @@
 
         <!--this layout for the user inputs-->
         <EditText
-            android:layout_marginTop="45dp"
+            android:id="@+id/edt_User"
             android:layout_width="220dp"
             android:layout_height="45dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:hint="USERNAME"
-            />
+            android:layout_marginTop="45dp"
+            android:hint="USERNAME" />
 
         <EditText
-            android:layout_marginTop="10dp"
+            android:id="@+id/edt_Pass"
             android:layout_width="220dp"
             android:layout_height="45dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
+            android:layout_marginTop="10dp"
             android:hint="PASSWORD"
-            android:inputType="textPassword"
-            />
+            android:inputType="textPassword" />
 
         <EditText
             android:id="@+id/email"
@@ -119,16 +119,16 @@
             />
 
         <Button
-            android:layout_marginTop="55dp"
+            android:id="@+id/btn_Submit"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginLeft="0dp"
             android:layout_marginRight="0dp"
+            android:layout_marginTop="55dp"
             android:background="@color/yellColor"
-            android:text="Submit"
-            android:textColor="@color/login_titleTextColor"
             android:onClick="nextScreen"
-            >
+            android:text="Submit"
+            android:textColor="@color/login_titleTextColor">
 
         </Button>
 

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,6 +15,10 @@ public class Login extends AppCompatActivity {
     EditText email_input;
     TextView login_tv, signup_tv;
     ImageView background;
+    EditText userName;
+    EditText password;
+    Verification v = new Verification() ;
+    //Button btn_Submit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +87,14 @@ public class Login extends AppCompatActivity {
 
 
     public void nextScreen(View view) {
-        startActivity(new Intent(Login.this, accountHomePage.class));
+        userName = (EditText) findViewById(R.id.edt_User);
+        password = (EditText) findViewById(R.id.edt_Pass);
+       boolean check = v.verify(userName.getText().toString(),password.getText().toString());
+        if(check == true) {
+            startActivity(new Intent(Login.this, accountHomePage.class));
+        }
+        else{
+            userName.setText("Wrong input");
+        }
     }
 }
