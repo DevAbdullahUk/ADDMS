@@ -85,6 +85,7 @@ public class startDriving extends AppCompatActivity implements LocationListener 
         if (!firstRun) { // calculate the new distance
             newDistance = location.distanceTo(oldLocation) + newDistance;
             distanceCovered.setText(f.format(newDistance/1000));
+
         }
         currentSpeed.setText(Math.round(3.6*location.getSpeed()) + "");
         theAddress = get_theAddress(location);
