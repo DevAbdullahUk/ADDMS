@@ -27,7 +27,7 @@ import java.util.Locale;
 
 public class startDriving extends AppCompatActivity implements LocationListener {
     // Components form the XML
-    TextView elappsedTime, speedLimit, distanceCovered, currentSpeed;
+    TextView elapsedTime, speedLimit, distanceCovered, currentSpeed;
     // for the GPS connection
     protected LocationManager locationManager;
     Location oldLocation;
@@ -47,7 +47,7 @@ public class startDriving extends AppCompatActivity implements LocationListener 
         currentSpeed = (TextView) findViewById(R.id.currentSpeed);
         speedLimit = (TextView) findViewById(R.id.speedLimit);
         distanceCovered = (TextView) findViewById(R.id.distanceCoverd);
-        elappsedTime = (TextView) findViewById(R.id.time);
+        elapsedTime = (TextView) findViewById(R.id.time);
         c = (Chronometer) findViewById(R.id.ch);
         // initialize resources
         speedList = getResources().getStringArray(R.array.speed100);
@@ -69,7 +69,7 @@ public class startDriving extends AppCompatActivity implements LocationListener 
                 int h   = (int)(time /3600000);
                 int m = (int)(time - h*3600000)/60000;
                 total = (h*60)+m;
-                elappsedTime.setText(total + "");
+                elapsedTime.setText(total + "");
             }
         });
         c.start();
