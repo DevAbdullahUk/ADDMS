@@ -13,24 +13,31 @@ import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import com.capstone.ako.addms.R;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.os.SystemClock;
+import android.widget.Chronometer;
 
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Locale;
 
 public class startDriving extends AppCompatActivity implements LocationListener {
     // Components form the XML
-    TextView elappsedTime ,speedLimit,distanceCoverd,currentSpeed;
+    TextView elappsedTime, speedLimit, distanceCovered, currentSpeed;
     // for the GPS connection
     protected LocationManager locationManager;
-    Location oldLocatio;
+    Location oldLocation;
     static String theAddress;
     String speedList[];
     boolean firstRun = true;
-    double newDistance = 0.0;
-
+    double newDistance = 0;
+    int total = 0;
+    Chronometer c;
+    DecimalFormat f = new DecimalFormat("###.#");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,10 +46,11 @@ public class startDriving extends AppCompatActivity implements LocationListener 
         // xml elements
         currentSpeed = (TextView) findViewById(R.id.currentSpeed);
         speedLimit = (TextView) findViewById(R.id.speedLimit);
-        distanceCoverd = (TextView) findViewById(R.id.distanceCoverd);
+        distanceCovered = (TextView) findViewById(R.id.distanceCoverd);
+        elappsedTime = (TextView) findViewById(R.id.time);
+        c = (Chronometer) findViewById(R.id.ch);
         // initialize resources
         speedList = getResources().getStringArray(R.array.speed100);
-
         // initialize the locationManager object and set the GPS
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
@@ -53,6 +61,18 @@ public class startDriving extends AppCompatActivity implements LocationListener 
         } else  {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
         }
+        c.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener(){
+            @Override
+            public void onChronometerTick(Chronometer cArg) {
+
+                long time = SystemClock.elapsedRealtime() - cArg.getBase();
+                int h   = (int)(time /3600000);
+                int m = (int)(time - h*3600000)/60000;
+                total = (h*60)+m;
+                elappsedTime.setText(total + "");
+            }
+        });
+        c.start();
     }
 
         /*
@@ -63,14 +83,14 @@ public class startDriving extends AppCompatActivity implements LocationListener 
     public void onLocationChanged(Location location) {
 
         if (!firstRun) { // calculate the new distance
-            newDistance = location.distanceTo(oldLocatio) + newDistance ;
-            distanceCoverd.setText(Math.round(newDistance) + "");
+            newDistance = location.distanceTo(oldLocation) + newDistance;
+            distanceCovered.setText(f.format(newDistance/1000));
         }
-        currentSpeed.setText(Math.round(3.6*location.getSpeed())+"");
+        currentSpeed.setText(Math.round(3.6*location.getSpeed()) + "");
         theAddress = get_theAddress(location);
         firstRun = false;
-        speedLimit.setText( get_speedLimit() + "");
-        oldLocatio = location;
+        speedLimit.setText(get_speedLimit() + "");
+        oldLocation = location;
     }
 
     @Override

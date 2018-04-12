@@ -8,6 +8,7 @@
     tools:context="com.capstone.ako.addms.startDriving">
 
 <!-- Layout for the current speed and speed limit -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -120,6 +121,13 @@
         </LinearLayout>
 
         <!--Layout for elapsed time display -->
+        <Chronometer
+            android:id="@+id/ch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:visibility="gone" />
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -138,11 +146,13 @@
                 android:paddingBottom="10dp"
                 android:background="@drawable/bottom_grey_border"
                 android:textStyle="bold"/>
+
             <TextView
+                android:id="@+id/time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="25"
-                android:textSize="55sp"/>
+                android:textSize="55sp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -151,7 +161,7 @@
                 android:layout_gravity="end"/>
         </LinearLayout>
     </LinearLayout>
-    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -165,6 +175,7 @@
             android:background="@color/yellColor"
             android:onClick="home"
             android:textColor="@color/login_titleTextColor"/>
+
     </LinearLayout>
 
 
