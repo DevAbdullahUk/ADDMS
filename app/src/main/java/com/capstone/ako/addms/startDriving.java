@@ -61,6 +61,8 @@ public class startDriving extends AppCompatActivity implements LocationListener 
         } else  {
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
         }
+
+        // set chronometer listener and start it
         c.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener(){
             @Override
             public void onChronometerTick(Chronometer cArg) {
