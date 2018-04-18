@@ -1,5 +1,6 @@
 package com.capstone.ako.addms;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -13,31 +14,39 @@ import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import com.capstone.ako.addms.R;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.os.SystemClock;
 import android.widget.Chronometer;
-
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class startDriving extends AppCompatActivity implements LocationListener {
     // Components form the XML
     TextView elapsedTime, speedLimit, distanceCovered, currentSpeed;
+    LinearLayout lay;
     // for the GPS connection
     protected LocationManager locationManager;
     Location oldLocation;
     static String theAddress;
+    Button b;
     String speedList[];
     boolean firstRun = true;
     double newDistance = 0;
     int total = 0;
+    int alerts = 0;
     Chronometer c;
+    List<Double> myList = new ArrayList<>();
     DecimalFormat f = new DecimalFormat("###.#");
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,10 +54,12 @@ public class startDriving extends AppCompatActivity implements LocationListener 
         setContentView(R.layout.activity_start_driving);
         // xml elements
         currentSpeed = (TextView) findViewById(R.id.currentSpeed);
+        b = (Button) findViewById(R.id.btn);
         speedLimit = (TextView) findViewById(R.id.speedLimit);
         distanceCovered = (TextView) findViewById(R.id.distanceCoverd);
         elapsedTime = (TextView) findViewById(R.id.time);
         c = (Chronometer) findViewById(R.id.ch);
+        lay = (LinearLayout) findViewById(R.id.main_layout);
         // initialize resources
         speedList = getResources().getStringArray(R.array.speed100);
         // initialize the locationManager object and set the GPS
@@ -59,7 +70,7 @@ public class startDriving extends AppCompatActivity implements LocationListener 
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             buildAlertMessageNoGps();
         } else  {
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+            //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
         }
 
         // set chronometer listener and start it
@@ -75,6 +86,31 @@ public class startDriving extends AppCompatActivity implements LocationListener 
             }
         });
         c.start();
+
+
+        // set onTouch listener to the main screen to detect touch activities
+        lay.setOnTouchListener(new View.OnTouchListener() {
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                Intent intent = new Intent(getBaseContext(), Alert.class);
+                intent.putExtra("ID", "PLEASE DON'T USE YOUR PHONE WHILE DRIVING!");
+                startActivity(intent);
+                alerts++;
+                return false;
+            }
+        });
+
+        // check if driver is over speed limit every 60s using check_Limit()
+        TimerTask t = new TimerTask() {
+            @Override
+            public void run() {
+                   check_Limit();
+            }
+        };
+
+        Timer timer = new Timer();
+        timer.schedule(t, 60000, 60000);
     }
 
         /*
@@ -87,9 +123,17 @@ public class startDriving extends AppCompatActivity implements LocationListener 
         if (!firstRun) { // calculate the new distance
             newDistance = location.distanceTo(oldLocation) + newDistance;
             distanceCovered.setText(f.format(newDistance/1000));
-
         }
         currentSpeed.setText(Math.round(3.6*location.getSpeed()) + "");
+        if(myList.size() < 10){
+            myList.add(Double.parseDouble(currentSpeed.getText().toString()));
+            if(myList.size() == 10){
+                check_Speed();
+            }
+        }
+        else{
+            myList.clear();
+        }
         theAddress = get_theAddress(location);
         firstRun = false;
         speedLimit.setText(get_speedLimit() + "");
@@ -161,5 +205,29 @@ This function will return the street name using the location object
             e.printStackTrace();
         }
         return "ERROR";
+    }
+
+    // check if the driver is over the speed limit to send an alert
+    public void check_Limit(){
+
+        if(Double.parseDouble(currentSpeed.getText().toString()) > Double.parseDouble(speedLimit.getText().toString())){
+            Intent intent = new Intent(getBaseContext(), Alert.class);
+            intent.putExtra("ID", "PLEASE SLOW DOWN AND OBEY THE SPEED LIMIT PROVIDED!");
+            startActivity(intent);
+            alerts++;
+        }
+
+    }
+
+    // check if the driver is speeding up/down to send an alert
+    public void check_Speed(){
+
+        if(Math.abs((myList.get(9) - myList.get(0))) > 10){
+            Intent intent = new Intent(getBaseContext(), Alert.class);
+            intent.putExtra("ID", "PLEASE DRIVE CAREFULLY AND AVOID SPEEDING UP/DOWN!");
+            startActivity(intent);
+            alerts++;
+        }
+
     }
 }

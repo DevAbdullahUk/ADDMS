@@ -5,12 +5,12 @@
     <color name="colorAccent">#247BA0</color>
     <color name="login_titleColor">#70C1B3</color>
     <color name="login_titleTextColor">#50514f</color>
-    <color name="whitColor">#FFFFFF</color>
+    <color name="whitColor">#ffffff</color>
     <color name="whitLoght">#c8ffffff</color>
     <color name="whitVeryLight">#75ffffff</color>
     <color name="yellColor">#FFE066</color>
     <color name="BlueColor">#247BA0</color>
-    <color name="RedFocus">#F25F5C</color>
+    <color name="RedFocus">#e65f5c</color>
     <color name="whitDark">#D9D9D9</color>
 
 

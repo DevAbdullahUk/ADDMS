@@ -2,49 +2,53 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.capstone.ako.addms.startDriving">
 
-<!-- Layout for the current speed and speed limit -->
+    <!-- Layout for the current speed and speed limit -->
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:background="@color/BlueColor"
         android:gravity="center"
+        android:orientation="horizontal"
         android:paddingBottom="40dp"
         android:paddingTop="40dp">
         <!-- layout for the current speed display -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/right_border"
             android:orientation="vertical"
-            android:paddingRight="35dp"
             android:paddingLeft="10dp"
-            android:background="@drawable/right_border">
+            android:paddingRight="35dp">
+
             <TextView
-                android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:text="@string/cSpeed"
-                android:textSize="17sp"
-                android:textColor="#D3D0D0"/>
+                android:textColor="#D3D0D0"
+                android:textSize="17sp" />
+
             <TextView
                 android:id="@+id/currentSpeed"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="00"
-                android:textSize="55sp"
-                android:textColor="@color/whitColor"/>
+                android:textColor="@color/whitColor"
+                android:textSize="55sp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="right"
                 android:text="@string/SI_km_h"
                 android:textColor="@color/whitColor"
-                android:layout_gravity="right"
-                android:textSize="15sp"/>
+                android:textSize="15sp" />
 
         </LinearLayout>
 
@@ -55,26 +59,29 @@
             android:orientation="vertical"
             android:paddingLeft="35dp"
             android:paddingRight="10dp">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sLimit"
                 android:textColor="#D3D0D0"
-                android:textSize="17sp"/>
+                android:textSize="17sp" />
+
             <TextView
                 android:id="@+id/speedLimit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="00"
-                android:textSize="55sp"
-                android:textColor="#FFFF50"/>
+                android:textColor="#FFFF50"
+                android:textSize="55sp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="right"
                 android:text="@string/SI_km_h"
                 android:textColor="@color/whitColor"
-                android:textSize="15sp"
-                android:layout_gravity="right"/>
+                android:textSize="15sp" />
         </LinearLayout>
     </LinearLayout>
 
@@ -82,42 +89,44 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center"
-        android:paddingTop="60dp"
-        >
+        android:orientation="horizontal"
+        android:paddingTop="60dp">
 
         <!-- Layout for the distance covered display -->
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/shadow"
             android:orientation="vertical"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
-            android:paddingTop="15dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/shadow">
+            android:paddingTop="15dp">
+
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
+                android:background="@drawable/bottom_grey_border"
+                android:paddingBottom="10dp"
                 android:text="@string/dCovered"
                 android:textSize="17sp"
-                android:paddingBottom="10dp"
-                android:background="@drawable/bottom_grey_border"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
+
             <TextView
                 android:id="@+id/distanceCoverd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="00"
-                android:textSize="55sp"/>
+                android:textSize="55sp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end"
                 android:text="km"
-                android:textSize="15sp"
-                android:layout_gravity="end"/>
+                android:textSize="15sp" />
         </LinearLayout>
 
         <!--Layout for elapsed time display -->
@@ -131,21 +140,22 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/shadow"
             android:orientation="vertical"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
-            android:paddingTop="15dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:background="@drawable/shadow">
+            android:paddingTop="15dp">
+
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
+                android:background="@drawable/bottom_grey_border"
+                android:paddingBottom="10dp"
                 android:text="@string/eTime"
                 android:textSize="17sp"
-                android:paddingBottom="10dp"
-                android:background="@drawable/bottom_grey_border"
-                android:textStyle="bold"/>
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/time"
@@ -153,28 +163,31 @@
                 android:layout_height="wrap_content"
                 android:text="25"
                 android:textSize="55sp" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="end"
                 android:text="min"
-                android:textSize="15sp"
-                android:layout_gravity="end"/>
+                android:textSize="15sp" />
         </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center|bottom">
+        android:gravity="center|bottom"
+        android:orientation="vertical">
+
         <Button
+            android:id="@+id/btn"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Stop Driving"
-            style="?android:attr/borderlessButtonStyle"
             android:background="@color/yellColor"
             android:onClick="home"
-            android:textColor="@color/login_titleTextColor"/>
+            android:text="Stop Driving"
+            android:textColor="@color/login_titleTextColor" />
 
     </LinearLayout>
 

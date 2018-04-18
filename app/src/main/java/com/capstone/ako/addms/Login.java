@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class Login extends AppCompatActivity {
     EditText email_input;
@@ -17,8 +18,8 @@ public class Login extends AppCompatActivity {
     ImageView background;
     EditText userName;
     EditText password;
-    Verification v = new Verification() ;
-    //Button btn_Submit;
+    Verification v = new Verification();
+    Button btn_Submit;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +30,7 @@ public class Login extends AppCompatActivity {
         signup_tv = (TextView) findViewById(R.id.signup);
         email_input = (EditText) findViewById(R.id.email);
         background = (ImageView) findViewById(R.id.background);
-
+        btn_Submit = (Button) findViewById(R.id.btn_Submit);
         // Set background scale and animation
         background.setScaleType(ImageView.ScaleType.FIT_XY);
         final Animation backgroundAnimation = AnimationUtils.loadAnimation(this, R.anim.background);
@@ -84,6 +85,7 @@ public class Login extends AppCompatActivity {
             }
         });
     }
+
 
 
     /** called when user trys to login into the application */
