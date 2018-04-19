@@ -23,14 +23,13 @@ import android.widget.TextView;
 import android.os.SystemClock;
 import android.widget.Chronometer;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class startDriving extends AppCompatActivity implements LocationListener {
-    // Components form the XML
+    // Components from the XML
     TextView elapsedTime, speedLimit, distanceCovered, currentSpeed;
     LinearLayout lay;
     // for the GPS connection
@@ -40,11 +39,9 @@ public class startDriving extends AppCompatActivity implements LocationListener 
     Button b;
     String speedList[];
     boolean firstRun = true;
-    double newDistance = 0;
-    int total = 0;
-    int alerts = 0;
+    double newDistance, initSpeed, finSpeed = 0;
+    int total, alerts = 0;
     Chronometer c;
-    List<Double> myList = new ArrayList<>();
     DecimalFormat f = new DecimalFormat("###.#");
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -70,7 +67,7 @@ public class startDriving extends AppCompatActivity implements LocationListener 
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             buildAlertMessageNoGps();
         } else  {
-            //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
         }
 
         // set chronometer listener and start it
@@ -106,11 +103,14 @@ public class startDriving extends AppCompatActivity implements LocationListener 
             @Override
             public void run() {
                    check_Limit();
+                   finSpeed = Double.parseDouble(currentSpeed.getText().toString());
+                   check_Speed();
+                   initSpeed = finSpeed;
             }
         };
 
         Timer timer = new Timer();
-        timer.schedule(t, 60000, 60000);
+        timer.schedule(t, 30000, 30000);
     }
 
         /*
@@ -125,15 +125,6 @@ public class startDriving extends AppCompatActivity implements LocationListener 
             distanceCovered.setText(f.format(newDistance/1000));
         }
         currentSpeed.setText(Math.round(3.6*location.getSpeed()) + "");
-        if(myList.size() < 10){
-            myList.add(Double.parseDouble(currentSpeed.getText().toString()));
-            if(myList.size() == 10){
-                check_Speed();
-            }
-        }
-        else{
-            myList.clear();
-        }
         theAddress = get_theAddress(location);
         firstRun = false;
         speedLimit.setText(get_speedLimit() + "");
@@ -222,7 +213,7 @@ This function will return the street name using the location object
     // check if the driver is speeding up/down to send an alert
     public void check_Speed(){
 
-        if(Math.abs((myList.get(9) - myList.get(0))) > 10){
+        if(Math.abs(finSpeed - initSpeed) > 20){
             Intent intent = new Intent(getBaseContext(), Alert.class);
             intent.putExtra("ID", "PLEASE DRIVE CAREFULLY AND AVOID SPEEDING UP/DOWN!");
             startActivity(intent);
