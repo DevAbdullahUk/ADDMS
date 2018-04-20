@@ -107,7 +107,7 @@
             android:inputType="textPassword" />
 
         <EditText
-            android:id="@+id/email"
+            android:id="@+id/edt_Email"
             android:layout_marginTop="10dp"
             android:layout_width="220dp"
             android:layout_height="45dp"

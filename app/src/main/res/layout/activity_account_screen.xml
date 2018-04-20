@@ -74,6 +74,7 @@
                 >
 
                 <TextView
+                    android:id="@+id/userNameSetting"
                     android:layout_width="220dp"
                     android:layout_height="45dp"
                     android:layout_gravity="center"
@@ -85,6 +86,7 @@
                     android:text="USERNAME" />
 
             <EditText
+                android:id="@+id/userPasswordOldSetting"
                 android:layout_marginTop="10dp"
                 android:layout_width="220dp"
                 android:layout_height="45dp"
@@ -93,6 +95,7 @@
                 android:inputType="textPassword"
                 />
             <EditText
+                android:id="@+id/userPasswordNewSetting"
                 android:layout_marginTop="10dp"
                 android:layout_width="220dp"
                 android:layout_height="45dp"
@@ -101,7 +104,7 @@
                 android:inputType="textPassword"
                 />
             <EditText
-                android:id="@+id/email"
+                android:id="@+id/userEmailSetting"
                 android:layout_marginTop="10dp"
                 android:layout_width="220dp"
                 android:layout_height="45dp"
@@ -116,6 +119,7 @@
                     android:background="@color/RedFocus"
                     android:text="DELETE ACCOUNT"
                     android:textColor="@color/whitColor"
+                    android:onClick="deleteAccount"
                     >
 
                 </Button>
@@ -132,6 +136,7 @@
         android:text="Submit"
         android:textColor="@color/login_titleTextColor"
         android:layout_alignParentBottom="true"
+        android:onClick="updateAccount"
         >
     </Button>
 

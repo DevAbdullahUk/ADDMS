@@ -93,6 +93,7 @@
             style="?android:attr/borderlessButtonStyle"
             android:background="@drawable/bt_border"
             android:layout_marginTop="6dp"
+            android:onClick="logout"
             />
     </LinearLayout>
 </LinearLayout>

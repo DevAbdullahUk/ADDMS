@@ -112,9 +112,10 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:background="@color/yellColor"
-        android:text="Submit"
+        android:text="SUBMIT"
         android:textColor="@color/login_titleTextColor"
         android:layout_alignParentBottom="true"
+        android:onClick="goBack"
         >
     </Button>
 </RelativeLayout>

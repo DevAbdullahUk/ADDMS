@@ -70,7 +70,7 @@ public class startDriving extends AppCompatActivity implements LocationListener 
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             buildAlertMessageNoGps();
         } else  {
-            //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
         }
 
         // set chronometer listener and start it

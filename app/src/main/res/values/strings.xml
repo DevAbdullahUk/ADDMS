@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">ADDMS</string>
+    <string name="dialog_parent">Adding a new parent will take some time! Please come back a few minutes later to check if the parent has added successfully</string>
     <string name="login_title">Driver Distraction Mitigation System
   </string>
     <string name="screenInfo">Click on \n <b>Start trip</b> \nIn order to\nStart monitoring </string>
