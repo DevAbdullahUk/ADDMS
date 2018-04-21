@@ -11,9 +11,11 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -22,10 +24,15 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.os.SystemClock;
 import android.widget.Chronometer;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -33,8 +40,13 @@ public class startDriving extends AppCompatActivity implements LocationListener 
     // Components form the XML
     TextView elapsedTime, speedLimit, distanceCovered, currentSpeed;
     LinearLayout lay;
+
     // for the GPS connection
     protected LocationManager locationManager;
+
+    // Firebase Firestore object
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+
     Location oldLocation;
     static String theAddress;
     Button b;
@@ -52,12 +64,15 @@ public class startDriving extends AppCompatActivity implements LocationListener 
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_start_driving);
+
+        //Keep the screen On (Awake)
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
         // xml elements
         currentSpeed = (TextView) findViewById(R.id.currentSpeed);
         b = (Button) findViewById(R.id.btn);
         speedLimit = (TextView) findViewById(R.id.speedLimit);
         distanceCovered = (TextView) findViewById(R.id.distanceCoverd);
-        elapsedTime = (TextView) findViewById(R.id.time);
         c = (Chronometer) findViewById(R.id.ch);
         lay = (LinearLayout) findViewById(R.id.main_layout);
         // initialize resources
@@ -82,7 +97,7 @@ public class startDriving extends AppCompatActivity implements LocationListener 
                 int h   = (int)(time /3600000);
                 int m = (int)(time - h*3600000)/60000;
                 total = (h*60)+m;
-                elapsedTime.setText(total + "");
+                cArg.setText(total + "");
             }
         });
         c.start();
@@ -119,7 +134,7 @@ public class startDriving extends AppCompatActivity implements LocationListener 
 
     @Override
     public void onLocationChanged(Location location) {
-
+        if(Double.parseDouble(f.format(newDistance/1000)) != 0.0) {
         if (!firstRun) { // calculate the new distance
             newDistance = location.distanceTo(oldLocation) + newDistance;
             distanceCovered.setText(f.format(newDistance/1000));
@@ -138,6 +153,32 @@ public class startDriving extends AppCompatActivity implements LocationListener 
         firstRun = false;
         speedLimit.setText(get_speedLimit() + "");
         oldLocation = location;
+
+            //Send data to firebase
+            Map<String, Object> dataToSave = new HashMap<>();
+
+            // if statement to check if location is null which means the driver finished the trip
+            if (location != null) {
+                dataToSave.put("Speed", get_speedLimit());
+            } else {
+                double timeHr = total * 0.0166667;
+                dataToSave.put("AverageSpeed", (Double.parseDouble(f.format(newDistance / 1000))) / timeHr);
+            }
+            dataToSave.put("Time", total);
+            dataToSave.put("Alerts", alerts);
+            dataToSave.put("Distance", distanceCovered.getText().toString());
+            db.collection("MobToWeb").document("Khalil").set(dataToSave).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d("Hi", "Saved");
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.w("Hi", "Not Saved");
+                }
+            });
+        }
     }
 
     @Override
@@ -151,6 +192,8 @@ public class startDriving extends AppCompatActivity implements LocationListener 
 
 
     public void home(View view) {
+        onLocationChanged(null);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         startActivity(new Intent(startDriving.this, accountHomePage.class));
     }
 
