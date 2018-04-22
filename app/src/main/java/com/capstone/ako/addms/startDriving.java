@@ -49,7 +49,6 @@ public class startDriving extends AppCompatActivity implements LocationListener 
 
     Location oldLocation;
     static String theAddress;
-    Button b;
     String speedList[];
     boolean firstRun = true;
     double newDistance = 0;
@@ -58,6 +57,8 @@ public class startDriving extends AppCompatActivity implements LocationListener 
     Chronometer c;
     List<Double> myList = new ArrayList<>();
     DecimalFormat f = new DecimalFormat("###.#");
+    // create and object of type Verification to save data to the sql
+    Verification verification = new Verification(this);
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,7 +71,6 @@ public class startDriving extends AppCompatActivity implements LocationListener 
 
         // xml elements
         currentSpeed = (TextView) findViewById(R.id.currentSpeed);
-        b = (Button) findViewById(R.id.btn);
         speedLimit = (TextView) findViewById(R.id.speedLimit);
         distanceCovered = (TextView) findViewById(R.id.distanceCoverd);
         c = (Chronometer) findViewById(R.id.ch);
@@ -194,6 +194,7 @@ public class startDriving extends AppCompatActivity implements LocationListener 
     public void home(View view) {
         onLocationChanged(null);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        verification.saveTripHistoy(3, 20, 30,75,"Ajanjua");
         startActivity(new Intent(startDriving.this, accountHomePage.class));
     }
 

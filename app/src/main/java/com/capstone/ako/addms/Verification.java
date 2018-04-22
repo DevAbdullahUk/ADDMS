@@ -11,7 +11,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,9 +24,9 @@ import java.util.List;
 public class Verification extends AppCompatActivity {
 
     //  SQL query and user name
-    static String executeQueryA = "", executeQueryB = "",executeQueryD = "",userName_String = null;
+    static String executeQueryA = "", executeQueryB = "",executeQueryD = "",executeQueryE = "",userName_String = null;
     int operationStates = 0;
-    static boolean addUser = false,updateUser = true;
+    static boolean addUser = false,updateUser = true, endDriving = false;
     static Context context;
     //  array of symbols that causes sql injection
     String[] sqlCheckList = {"--", ";--", ";", "/", "/", "@@", "@", "char", "nchar", "varchar", "nvarchar", "alter", "begin", "cast",
@@ -49,7 +52,7 @@ public class Verification extends AppCompatActivity {
     }
 
     /*
-     SignUp an new user to the Database 
+     SignUp an new user to the Database
      */
     public void userSignUp(String userName, String userPassword, String EMail) {
         if (verify(userName, userPassword)) {
@@ -81,7 +84,7 @@ public class Verification extends AppCompatActivity {
     }
 
     /*
-    SignUp an new user to the Database. 
+    SignUp an new user to the Database.
     */
     public void userLogin(String userName, String userPassword) {
         if (verify(userName, userPassword)) {
@@ -92,10 +95,10 @@ public class Verification extends AppCompatActivity {
             showMessage(1);
         }
     }
-    
+
     /*
     Show the parents name,delete the parents or add a new parent. this method will return a list
-    In the parameters the Actions can be: GET_PARENTS = 0, ADD_PARENTS = 1, DELETE_PARENTS = 3 
+    In the parameters the Actions can be: GET_PARENTS = 0, ADD_PARENTS = 1, DELETE_PARENTS = 3
      */
     public List<String> parentsControl(int action, String parentName, String userName ){
         if (verify(parentName,userName)){
@@ -111,9 +114,9 @@ public class Verification extends AppCompatActivity {
         }  else { showMessage(1); }
         return parentsList;
     }
-    
-    /* 
-    This method is used only to show a toast message 
+
+    /*
+    This method is used only to show a toast message
     */
     public void showMessage (int messageNumber){
         String message = "";
@@ -129,6 +132,18 @@ public class Verification extends AppCompatActivity {
             default: message = "UMMM! SOMETHING WENT WRONG";
         }
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+    }
+
+    /*
+    This is method is used when user end driving mode, to in order to save the
+    last trip details to the user history
+     */
+    public void saveTripHistoy (int numberOfAlerts, double coveredDistance, double elapsedTime, double averageSpeed, String userName){
+        DateFormat theDate = new SimpleDateFormat("MMM d, yyyy");
+        executeQueryE = "INSERT INTO dbo.TripDetails VALUES ("+numberOfAlerts+","+coveredDistance+", "+elapsedTime+","+averageSpeed+", '"+userName+"', '"+theDate.format(new Date())+"')";
+//        executeQueryE = "INSERT INTO dbo.TripDetails VALUES ("+numberOfAlerts+","+coveredDistance+", "+elapsedTime+","+averageSpeed+", '"+userName+"', 'March 11 2018'";
+        endDriving = true;
+        new QueryExecuting_account().execute();
     }
 
     /*
@@ -197,9 +212,12 @@ public class Verification extends AppCompatActivity {
                 Connection DbConn = DriverManager.getConnection("jdbc:jtds:sqlserver://10.20.1.153:49170/;user=sa;password=140096;integratedSecurity=true;");
                 Statement stmt = DbConn.createStatement();
                 // execute the SQL query B (Check if the user exists in the DB then query A
-               if (updateUser){
+                if (endDriving) {
+                    stmt.executeUpdate(executeQueryE);
+                    endDriving = false;
+                }
+               else if (updateUser){
                    stmt.executeUpdate(executeQueryD); //TODO: Tell the user if the update is not successful
-                  // context.startActivity(new Intent(context, accountHomePage.class));
                }else { // Get the list of the parents
                    ResultSet reset = stmt.executeQuery(executeQueryD);
                    while (reset.next()) { // To check if the userName
