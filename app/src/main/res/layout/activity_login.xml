@@ -73,7 +73,6 @@
                 android:textColor="@color/login_titleTextColor"
                 android:textSize="15dp"
                 android:background="@drawable/bt_with_border"
-                android:onClick="login"
                 />
             <TextView
                 android:id="@+id/signup"
@@ -107,7 +106,7 @@
             android:inputType="textPassword" />
 
         <EditText
-            android:id="@+id/email"
+            android:id="@+id/edt_Email"
             android:layout_marginTop="10dp"
             android:layout_width="220dp"
             android:layout_height="45dp"

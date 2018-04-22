@@ -5,56 +5,78 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.os.SystemClock;
 import android.widget.Chronometer;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.FirebaseFirestore;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
 public class startDriving extends AppCompatActivity implements LocationListener {
-    // Components from the XML
+    // Components form the XML
     TextView elapsedTime, speedLimit, distanceCovered, currentSpeed;
     LinearLayout lay;
+
+    //Firebase
+    FirebaseFirestore db;
+
     // for the GPS connection
     protected LocationManager locationManager;
+
     Location oldLocation;
-    static String theAddress;
-    Button b;
+    static String theAddress, userName;
     String speedList[];
     boolean firstRun = true;
-    double newDistance, initSpeed, finSpeed = 0;
-    int total, alerts = 0;
+    double newDistance = 0;
+    int total = 0;
+    int alerts = 0;
     Chronometer c;
+    List<Double> myList = new ArrayList<>();
     DecimalFormat f = new DecimalFormat("###.#");
+    // create and object of type Verification to save data to the sql
+    Verification verification = new Verification(this);
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_start_driving);
+
+        //Keep the screen On (Awake)
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        // Firebase Firestore object
+        db = FirebaseFirestore.getInstance();
+
         // xml elements
         currentSpeed = (TextView) findViewById(R.id.currentSpeed);
-        b = (Button) findViewById(R.id.btn);
         speedLimit = (TextView) findViewById(R.id.speedLimit);
         distanceCovered = (TextView) findViewById(R.id.distanceCoverd);
-        elapsedTime = (TextView) findViewById(R.id.time);
         c = (Chronometer) findViewById(R.id.ch);
         lay = (LinearLayout) findViewById(R.id.main_layout);
         // initialize resources
@@ -70,6 +92,10 @@ public class startDriving extends AppCompatActivity implements LocationListener 
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
         }
 
+        // Set the user name from Preferences
+        final SharedPreferences login_Data = PreferenceManager.getDefaultSharedPreferences(this);
+        userName = login_Data.getString("userName","0");
+
         // set chronometer listener and start it
         c.setOnChronometerTickListener(new Chronometer.OnChronometerTickListener(){
             @Override
@@ -79,7 +105,7 @@ public class startDriving extends AppCompatActivity implements LocationListener 
                 int h   = (int)(time /3600000);
                 int m = (int)(time - h*3600000)/60000;
                 total = (h*60)+m;
-                elapsedTime.setText(total + "");
+                cArg.setText(total + "");
             }
         });
         c.start();
@@ -103,14 +129,11 @@ public class startDriving extends AppCompatActivity implements LocationListener 
             @Override
             public void run() {
                    check_Limit();
-                   finSpeed = Double.parseDouble(currentSpeed.getText().toString());
-                   check_Speed();
-                   initSpeed = finSpeed;
             }
         };
 
         Timer timer = new Timer();
-        timer.schedule(t, 30000, 30000);
+        timer.schedule(t, 60000, 60000);
     }
 
         /*
@@ -119,16 +142,51 @@ public class startDriving extends AppCompatActivity implements LocationListener 
 
     @Override
     public void onLocationChanged(Location location) {
-
+        if(Double.parseDouble(f.format(newDistance/1000)) != 0.0) {
         if (!firstRun) { // calculate the new distance
             newDistance = location.distanceTo(oldLocation) + newDistance;
             distanceCovered.setText(f.format(newDistance/1000));
         }
         currentSpeed.setText(Math.round(3.6*location.getSpeed()) + "");
+        if(myList.size() < 10){
+            myList.add(Double.parseDouble(currentSpeed.getText().toString()));
+            if(myList.size() == 10){
+                check_Speed();
+            }
+        }
+        else{
+            myList.clear();
+        }
         theAddress = get_theAddress(location);
         firstRun = false;
         speedLimit.setText(get_speedLimit() + "");
         oldLocation = location;
+
+            //Send data to firebase
+            Map<String, Object> dataToSave = new HashMap<>();
+
+            // if statement to check if location is null which means the driver finished the trip
+            if (location != null) {
+                dataToSave.put("Speed", get_speedLimit());
+            } else {
+                double timeHr = total * 0.0166667;
+                dataToSave.put("AverageSpeed", (Double.parseDouble(f.format(newDistance / 1000))) / timeHr);
+            }
+            dataToSave.put("Time", total);
+            dataToSave.put("Alerts", alerts);
+            dataToSave.put("Distance", distanceCovered.getText().toString());
+            db.collection("MobToWeb").document(userName).set(dataToSave).addOnSuccessListener(new OnSuccessListener<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.d("Hi", "Saved");
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception e) {
+                    Log.w("Hi", "Not Saved");
+                }
+            });
+        }
     }
 
     @Override
@@ -142,6 +200,9 @@ public class startDriving extends AppCompatActivity implements LocationListener 
 
 
     public void home(View view) {
+        onLocationChanged(null);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        verification.saveTripHistoy(alerts, Double.parseDouble(f.format(newDistance/1000)), total,75,userName);
         startActivity(new Intent(startDriving.this, accountHomePage.class));
     }
 
@@ -213,7 +274,7 @@ This function will return the street name using the location object
     // check if the driver is speeding up/down to send an alert
     public void check_Speed(){
 
-        if(Math.abs(finSpeed - initSpeed) > 20){
+        if(Math.abs((myList.get(9) - myList.get(0))) > 10){
             Intent intent = new Intent(getBaseContext(), Alert.class);
             intent.putExtra("ID", "PLEASE DRIVE CAREFULLY AND AVOID SPEEDING UP/DOWN!");
             startActivity(intent);

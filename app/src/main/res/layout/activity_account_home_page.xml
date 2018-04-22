@@ -93,6 +93,7 @@
             style="?android:attr/borderlessButtonStyle"
             android:background="@drawable/bt_border"
             android:layout_marginTop="6dp"
+            android:onClick="logout"
             />
     </LinearLayout>
 </LinearLayout>
@@ -144,15 +145,16 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/txt_Alerts"
                 android:layout_width="60dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="30dp"
                 android:background="#e0e0eb"
                 android:paddingTop="7dp"
-                android:text="2"
+                android:text="0"
                 android:textAlignment="center"
                 android:textColor="@android:color/holo_red_dark"
-                android:textSize="24sp"
+                android:textSize="18sp"
                 android:textStyle="bold">
 
             </TextView>
@@ -194,11 +196,12 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/txt_AvgSpeed"
                 android:layout_width="60dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="30dp"
                 android:background="#e0e0eb"
-                android:text="100 \nkm/h"
+                android:text="0 \nkm/h"
                 android:textAlignment="center"
                 android:textColor="@android:color/holo_red_dark"
                 android:textSize="18sp"
@@ -213,9 +216,9 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:background="@drawable/shadow"
             android:gravity="center"
-            android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -236,18 +239,19 @@
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
-                android:text="Trip Time"
                 android:gravity="start"
+                android:text="Trip Time"
                 android:textColor="@color/login_titleTextColor"
                 android:textSize="15dp"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/txt_Time"
                 android:layout_width="60dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="30dp"
                 android:background="#e0e0eb"
-                android:text="39 \n min"
+                android:text="0 \n min"
                 android:textAlignment="center"
                 android:textColor="@android:color/holo_red_dark"
                 android:textSize="18sp"
@@ -292,11 +296,12 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/txt_Distance"
                 android:layout_width="60dp"
                 android:layout_height="50dp"
                 android:layout_marginLeft="30dp"
                 android:background="#e0e0eb"
-                android:text="55 \nkm"
+                android:text="0 \nkm"
                 android:textAlignment="center"
                 android:textColor="@android:color/holo_red_dark"
                 android:textSize="18sp"

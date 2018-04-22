@@ -108,13 +108,14 @@
 
 
     </LinearLayout>
+
     <Button
+        android:id="@+id/sub"
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="@color/yellColor"
-        android:text="Submit"
-        android:textColor="@color/login_titleTextColor"
         android:layout_alignParentBottom="true"
-        >
-    </Button>
+        android:background="@color/yellColor"
+        android:onClick="goBack"
+        android:text="SUBMIT"
+        android:textColor="@color/login_titleTextColor"></Button>
 </RelativeLayout>

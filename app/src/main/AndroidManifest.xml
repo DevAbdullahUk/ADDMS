@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.capstone.ako.addms">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -32,7 +33,6 @@
         <activity
             android:name=".startDriving"
             android:theme="@style/accountScren"></activity>
-        <activity android:name=".Alert"></activity>
     </application>
 
 </manifest>
