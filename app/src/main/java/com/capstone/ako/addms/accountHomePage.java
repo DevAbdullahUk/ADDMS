@@ -33,7 +33,7 @@ public class accountHomePage extends AppCompatActivity {
         final SharedPreferences login_Data = PreferenceManager.getDefaultSharedPreferences(this);
         userName_tv.setText( login_Data.getString("userName","0"));
 
-        // Firebase Firestore object
+        // FirebaseFirestore object
         db = FirebaseFirestore.getInstance();
 
 
