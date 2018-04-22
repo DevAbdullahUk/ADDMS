@@ -69,18 +69,20 @@ public class Verification extends AppCompatActivity {
     This method will update the user information
      */
     public void updateUser(String userName, String userPasswordNew, String userPasswordNOld, String EMail) {
-        if (verify(userPasswordNew, userPasswordNOld) && verify(userName, "empty")) {
-            updateUser = true;
+        updateUser = true;
+        if (userPasswordNew==null &&userPasswordNOld== null && EMail == null){
+            executeQueryD = "UPDATE dbo.[User] SET Status = 0 WHERE UserName = '"+userName+"'" ;
+            new QueryExecuting_account().execute();
+        } else if (verify(userPasswordNew, userPasswordNOld)) {
             if (EMail.isEmpty()) { // Change the password
-                executeQueryD = "UPDATE dbo.[User] SET Passowrd = '" + userPasswordNOld + "' WHERE Passowrd LIKE '" + userPasswordNew + "' AND UserName = '" + userName + "'";
-            } else if (EMail == null && userPasswordNew == null && userPasswordNOld == null){ // Delete the account
-                executeQueryD = "UPDATE dbo.[User] SET Status = '0' WHERE UserName = '" + userName + "'";
-            }
-            else { // Change email and password
-                executeQueryD = "UPDATE dbo.[User] SET Email = '" + EMail + "', Passowrd = '" + userPasswordNOld + "' WHERE Passowrd LIKE '" + userPasswordNew + "' AND UserName = '" + userName + "'";
+                executeQueryD = "UPDATE dbo.[User] SET Passowrd = '" + userPasswordNew + "' WHERE Passowrd LIKE '" + userPasswordNOld + "' AND UserName = '" + userName + "'";
+            } else { // Change email and password
+                executeQueryD = "UPDATE dbo.[User] SET Email = '" + EMail + "', Passowrd = '" + userPasswordNew + "' WHERE Passowrd LIKE '" + userPasswordNOld + "' AND UserName = '" + userName + "'";
             }
             new QueryExecuting_account().execute();
-        } else { showMessage(1); }
+        } else {
+            showMessage(1);
+        }
     }
 
     /*
@@ -141,7 +143,6 @@ public class Verification extends AppCompatActivity {
     public void saveTripHistoy (int numberOfAlerts, double coveredDistance, double elapsedTime, double averageSpeed, String userName){
         DateFormat theDate = new SimpleDateFormat("MMM d, yyyy");
         executeQueryE = "INSERT INTO dbo.TripDetails VALUES ("+numberOfAlerts+","+coveredDistance+", "+elapsedTime+","+averageSpeed+", '"+userName+"', '"+theDate.format(new Date())+"')";
-//        executeQueryE = "INSERT INTO dbo.TripDetails VALUES ("+numberOfAlerts+","+coveredDistance+", "+elapsedTime+","+averageSpeed+", '"+userName+"', 'March 11 2018'";
         endDriving = true;
         new QueryExecuting_account().execute();
     }
@@ -218,7 +219,6 @@ public class Verification extends AppCompatActivity {
                 }
                else if (updateUser){
                    stmt.executeUpdate(executeQueryD); //TODO: Tell the user if the update is not successful
-                    context.startActivity(new Intent(context, accountHomePage.class));
                }else { // Get the list of the parents
                    ResultSet reset = stmt.executeQuery(executeQueryD);
                    while (reset.next()) { // To check if the userName

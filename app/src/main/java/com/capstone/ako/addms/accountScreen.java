@@ -12,6 +12,7 @@ import android.support.v7.widget.LinearLayoutCompat;
 import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -58,8 +59,7 @@ public class accountScreen extends AppCompatActivity {
         // Create a dialog box to be used when first time adding a new parent
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage(R.string.dialog_parent).setTitle("Adding a new parent");
-         dialog = builder.create();
-
+        dialog = builder.create();
     }
 
          /*
@@ -169,10 +169,12 @@ public class accountScreen extends AppCompatActivity {
     public void updateAccount(View view) {
         verification.updateUser(
                 userName_tv.getText().toString(),
-                userPasswordOLD_tv.getText().toString(),
                 userPasswordNew_tv.getText().toString(),
+                userPasswordOLD_tv.getText().toString(),
                 userEmail_tv.getText().toString()
         );
+        startActivity(new Intent(accountScreen.this, accountHomePage.class));
+        finish();
     }
 
     /*
@@ -185,12 +187,21 @@ public class accountScreen extends AppCompatActivity {
                 null,
                 null
         );
+        // Save the login data
+        final SharedPreferences login_Data = PreferenceManager.getDefaultSharedPreferences(accountScreen.this);
+        final SharedPreferences.Editor userName_Pref = login_Data.edit();
+        userName_Pref.putString("userName", null);
+        userName_Pref.commit(); // close editor
+
+        startActivity(new Intent(accountScreen.this,Login.class));
+        finish();
+
     }
     /*
     This method is for switching the screen form th current acclivity to accountScreen acclivity
      */
     public void goBack(View view) {
-        startActivity(new Intent(accountScreen.this, accountScreen.class));
+        startActivity(new Intent(accountScreen.this, accountHomePage.class));
         finish();
     }
 }
