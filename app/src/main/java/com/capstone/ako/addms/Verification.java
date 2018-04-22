@@ -71,7 +71,7 @@ public class Verification extends AppCompatActivity {
     public void updateUser(String userName, String userPasswordNew, String userPasswordNOld, String EMail) {
         if (verify(userPasswordNew, userPasswordNOld) && verify(userName, "empty")) {
             updateUser = true;
-            if (EMail == null) { // Change the password
+            if (EMail.isEmpty()) { // Change the password
                 executeQueryD = "UPDATE dbo.[User] SET Passowrd = '" + userPasswordNOld + "' WHERE Passowrd LIKE '" + userPasswordNew + "' AND UserName = '" + userName + "'";
             } else if (EMail == null && userPasswordNew == null && userPasswordNOld == null){ // Delete the account
                 executeQueryD = "UPDATE dbo.[User] SET Status = '0' WHERE UserName = '" + userName + "'";
@@ -218,6 +218,7 @@ public class Verification extends AppCompatActivity {
                 }
                else if (updateUser){
                    stmt.executeUpdate(executeQueryD); //TODO: Tell the user if the update is not successful
+                    context.startActivity(new Intent(context, accountHomePage.class));
                }else { // Get the list of the parents
                    ResultSet reset = stmt.executeQuery(executeQueryD);
                    while (reset.next()) { // To check if the userName

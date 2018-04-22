@@ -180,7 +180,7 @@ public class accountScreen extends AppCompatActivity {
     */
     public void deleteAccount(View view) {
         verification.updateUser(
-                userName_tv.getText().toString(),
+               userNmae,
                null,
                 null,
                 null
