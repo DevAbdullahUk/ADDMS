@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "699524428685",
+    "firebase_url": "https://addms-65a3f.firebaseio.com",
+    "project_id": "addms-65a3f",
+    "storage_bucket": "addms-65a3f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:699524428685:android:954cccb4f4727683",
+        "android_client_info": {
+          "package_name": "com.capstone.ako.addms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "699524428685-0kvq8vu9ivc7mnbo2qhlf1tvm38jmaqu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9Nd-OK6a07zJ1S4ZH54rK23cD0fYyzTY"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
