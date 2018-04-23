@@ -48,7 +48,7 @@ public class startDriving extends AppCompatActivity implements LocationListener{
     Location oldLocation;
     static String theAddress, userName;
     String speedList[];
-    boolean firstRun = true;
+    boolean firstRun = true, x = false;
     double newDistance = 0, initSpeed=0, finSpeed=0;
     int total = 0;
     static int alerts = 0;
@@ -63,6 +63,7 @@ public class startDriving extends AppCompatActivity implements LocationListener{
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_start_driving);
+        x = false;
 
         // Keep the screen On (Awake)
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
@@ -138,7 +139,8 @@ public class startDriving extends AppCompatActivity implements LocationListener{
 
     @Override
     public void onLocationChanged(Location location) {
-        if(Double.parseDouble(f.format(newDistance/1000)) != 0.0) {
+        if(!x){
+
         if (!firstRun) { // calculate the new distance
             newDistance = location.distanceTo(oldLocation) + newDistance;
             distanceCovered.setText(f.format(newDistance/1000));
@@ -150,33 +152,11 @@ public class startDriving extends AppCompatActivity implements LocationListener{
         oldLocation = location;
         finSpeed = Double.parseDouble(currentSpeed.getText().toString());
         check_Speed();
+        fb_data(false);
 
-            // Send data to firebase
-            Map<String, Object> dataToSave = new HashMap<>();
-
-            // if statement to check if location is null which means the driver finished the trip
-            if (location != null) {
-                dataToSave.put("Speed", get_speedLimit());
-            } else {
-                double timeHr = total * 0.0166667;
-                dataToSave.put("AverageSpeed", (Double.parseDouble(f.format(newDistance / 1000))) / timeHr);
-            }
-            dataToSave.put("Time", total);
-            dataToSave.put("Alerts", alerts);
-            dataToSave.put("Distance", distanceCovered.getText().toString());
-            db.collection("MobToWeb").document(userName).set(dataToSave).addOnSuccessListener(new OnSuccessListener<Void>() {
-                @Override
-                public void onSuccess(Void aVoid) {
-                    Log.d("Hi", "Saved");
-                }
-            }).addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    Log.w("Hi", "Not Saved");
-                }
-            });
         }
     }
+
 
     @Override
     public void onProviderDisabled(String provider) {/* I wont be using the sh*t for now*/}
@@ -189,7 +169,8 @@ public class startDriving extends AppCompatActivity implements LocationListener{
 
 
     public void home(View view) {
-        onLocationChanged(null);
+        x = true;
+        fb_data(true);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         verification.saveTripHistoy(alerts, Double.parseDouble(f.format(newDistance/1000)), total,75,userName);
         startActivity(new Intent(startDriving.this, accountHomePage.class));
@@ -271,5 +252,32 @@ This function will return the street name using the location object
             startActivity(intent);
         }
 
+    }
+
+    public void fb_data(boolean last) {
+        // Send data to firebase
+        Map<String, Object> dataToSave = new HashMap<>();
+
+        // if statement to check if location is null which means the driver finished the trip
+        if (!last) {
+            dataToSave.put("Speed", Double.parseDouble(currentSpeed.getText().toString()));
+        } else {
+            double timeHr = total * 0.0166667;
+            dataToSave.put("AverageSpeed", Double.parseDouble(f.format((newDistance / 1000) / timeHr)));
+        }
+        dataToSave.put("Time", total);
+        dataToSave.put("Alerts", alerts);
+        dataToSave.put("Distance", distanceCovered.getText().toString());
+        db.collection("MobToWeb").document(userName).set(dataToSave).addOnSuccessListener(new OnSuccessListener<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.d("Hi", "Saved");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.w("Hi", "Not Saved");
+            }
+        });
     }
 }
