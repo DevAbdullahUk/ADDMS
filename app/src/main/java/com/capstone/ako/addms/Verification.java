@@ -129,7 +129,7 @@ public class Verification extends AppCompatActivity {
             break;
             case 3 : message = "PLEASE CHECK YOUR INTERNET CONNECTION";
             break;
-            case 4 : message = "SORRY! USERNAME OR PASSWORD IS'T CORRECT";
+            case 4 : message = "SORRY! USERNAME OR PASSWORD ISN'T CORRECT";
             break;
             default: message = "UMMM! SOMETHING WENT WRONG";
         }

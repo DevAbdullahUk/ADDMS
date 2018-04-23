@@ -18,7 +18,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.LinearLayout;
@@ -29,7 +28,6 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.text.DecimalFormat;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -37,27 +35,26 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class startDriving extends AppCompatActivity implements LocationListener {
-    // Components form the XML
-    TextView elapsedTime, speedLimit, distanceCovered, currentSpeed;
+public class startDriving extends AppCompatActivity implements LocationListener{
+    // Components from the XML
+    TextView speedLimit, distanceCovered, currentSpeed;
     LinearLayout lay;
 
-    //Firebase
+    // Firebase
     FirebaseFirestore db;
 
     // for the GPS connection
     protected LocationManager locationManager;
-
     Location oldLocation;
     static String theAddress, userName;
     String speedList[];
     boolean firstRun = true;
-    double newDistance = 0;
+    double newDistance = 0, initSpeed=0, finSpeed=0;
     int total = 0;
-    int alerts = 0;
+    static int alerts = 0;
     Chronometer c;
-    List<Double> myList = new ArrayList<>();
     DecimalFormat f = new DecimalFormat("###.#");
+
     // create and object of type Verification to save data to the sql
     Verification verification = new Verification(this);
     @SuppressLint("ClickableViewAccessibility")
@@ -67,7 +64,7 @@ public class startDriving extends AppCompatActivity implements LocationListener 
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_start_driving);
 
-        //Keep the screen On (Awake)
+        // Keep the screen On (Awake)
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
         // Firebase Firestore object
@@ -112,15 +109,13 @@ public class startDriving extends AppCompatActivity implements LocationListener 
 
 
         // set onTouch listener to the main screen to detect touch activities
-        lay.setOnTouchListener(new View.OnTouchListener() {
-
+        lay.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
+            public void onClick(View v) {
+                alerts++;
                 Intent intent = new Intent(getBaseContext(), Alert.class);
                 intent.putExtra("ID", "PLEASE DON'T USE YOUR PHONE WHILE DRIVING!");
                 startActivity(intent);
-                alerts++;
-                return false;
             }
         });
 
@@ -129,11 +124,12 @@ public class startDriving extends AppCompatActivity implements LocationListener 
             @Override
             public void run() {
                    check_Limit();
+                   initSpeed = Double.parseDouble(currentSpeed.getText().toString());
             }
         };
 
         Timer timer = new Timer();
-        timer.schedule(t, 60000, 60000);
+        timer.scheduleAtFixedRate(t, 0, 30000);
     }
 
         /*
@@ -148,21 +144,14 @@ public class startDriving extends AppCompatActivity implements LocationListener 
             distanceCovered.setText(f.format(newDistance/1000));
         }
         currentSpeed.setText(Math.round(3.6*location.getSpeed()) + "");
-        if(myList.size() < 10){
-            myList.add(Double.parseDouble(currentSpeed.getText().toString()));
-            if(myList.size() == 10){
-                check_Speed();
-            }
-        }
-        else{
-            myList.clear();
-        }
         theAddress = get_theAddress(location);
         firstRun = false;
         speedLimit.setText(get_speedLimit() + "");
         oldLocation = location;
+        finSpeed = Double.parseDouble(currentSpeed.getText().toString());
+        check_Speed();
 
-            //Send data to firebase
+            // Send data to firebase
             Map<String, Object> dataToSave = new HashMap<>();
 
             // if statement to check if location is null which means the driver finished the trip
@@ -263,10 +252,10 @@ This function will return the street name using the location object
     public void check_Limit(){
 
         if(Double.parseDouble(currentSpeed.getText().toString()) > Double.parseDouble(speedLimit.getText().toString())){
+            alerts++;
             Intent intent = new Intent(getBaseContext(), Alert.class);
             intent.putExtra("ID", "PLEASE SLOW DOWN AND OBEY THE SPEED LIMIT PROVIDED!");
             startActivity(intent);
-            alerts++;
         }
 
     }
@@ -274,11 +263,12 @@ This function will return the street name using the location object
     // check if the driver is speeding up/down to send an alert
     public void check_Speed(){
 
-        if(Math.abs((myList.get(9) - myList.get(0))) > 10){
+        if(Math.abs(finSpeed - initSpeed) > 20){
+            alerts++;
+            initSpeed = Double.parseDouble(currentSpeed.getText().toString());
             Intent intent = new Intent(getBaseContext(), Alert.class);
             intent.putExtra("ID", "PLEASE DRIVE CAREFULLY AND AVOID SPEEDING UP/DOWN!");
             startActivity(intent);
-            alerts++;
         }
 
     }

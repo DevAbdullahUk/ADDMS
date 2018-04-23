@@ -18,7 +18,7 @@ public class Alert extends AppCompatActivity {
 
     String s;
 
-    private Handler mHandler = new Handler();
+    private Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +27,8 @@ public class Alert extends AppCompatActivity {
         setContentView(R.layout.activity_alert);
 
         mProgressBar = (ProgressBar) findViewById(R.id.progressbar);
+
+        mHandler = new Handler();
 
         s = getIntent().getStringExtra("ID");
 

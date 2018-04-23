@@ -33,6 +33,8 @@
         <activity
             android:name=".startDriving"
             android:theme="@style/accountScren"></activity>
+        <activity
+            android:name=".Alert"></activity>
     </application>
 
 </manifest>
