@@ -13,6 +13,7 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.preference.PreferenceManager;
 import android.provider.Settings;
+import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -24,8 +25,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.os.SystemClock;
 import android.widget.Chronometer;
+import android.widget.Toast;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import java.text.DecimalFormat;
 import java.util.HashMap;
@@ -39,9 +43,15 @@ public class startDriving extends AppCompatActivity implements LocationListener{
     // Components from the XML
     TextView speedLimit, distanceCovered, currentSpeed;
     LinearLayout lay;
+    Location location1 ;
 
     // Firebase
     FirebaseFirestore db;
+
+    //Variables for TextToSpeech
+    static String parent="", message = "";
+    String oldMsg,oldParent;
+    TextToSpeech tts;
 
     // for the GPS connection
     protected LocationManager locationManager;
@@ -134,11 +144,12 @@ public class startDriving extends AppCompatActivity implements LocationListener{
     }
 
         /*
-    when the Location is Changed (new Latitude and Longitude) this little fucker will be called!
+    when the Location is Changed (new Latitude and Longitude) !
      */
 
     @Override
     public void onLocationChanged(Location location) {
+
         if(!x){
 
         if (!firstRun) { // calculate the new distance
@@ -152,7 +163,30 @@ public class startDriving extends AppCompatActivity implements LocationListener{
         oldLocation = location;
         finSpeed = Double.parseDouble(currentSpeed.getText().toString());
         check_Speed();
-        fb_data(false);
+        location1 = location;
+        fb_data(false, location);
+
+        //Retrieve message from firebase to convert to speech
+
+                db.collection("WebToMob").document(userName).get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        try {
+                            Log.w("Hii", ""+documentSnapshot);
+                            message = documentSnapshot.getData().get("Message").toString();
+                            parent = documentSnapshot.getData().get("Parent").toString();
+
+                            if(!(message.equals(oldMsg)) || !(parent.equals(oldParent))) {
+                                speak(message, parent);
+                            }
+                            oldMsg = message;
+                            oldParent = parent;
+                        } catch (Exception e) {
+                            System.out.println(e);
+                        }
+                    }
+
+                });
 
         }
     }
@@ -170,7 +204,7 @@ public class startDriving extends AppCompatActivity implements LocationListener{
 
     public void home(View view) {
         x = true;
-        fb_data(true);
+        fb_data(true, location1);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         verification.saveTripHistoy(alerts, Double.parseDouble(f.format(newDistance/1000)), total,75,userName);
         startActivity(new Intent(startDriving.this, accountHomePage.class));
@@ -254,7 +288,7 @@ This function will return the street name using the location object
 
     }
 
-    public void fb_data(boolean last) {
+    public void fb_data(boolean last, Location location) {
         // Send data to firebase
         Map<String, Object> dataToSave = new HashMap<>();
 
@@ -263,11 +297,21 @@ This function will return the street name using the location object
             dataToSave.put("Speed", Double.parseDouble(currentSpeed.getText().toString()));
         } else {
             double timeHr = total * 0.0166667;
-            dataToSave.put("AverageSpeed", Double.parseDouble(f.format((newDistance / 1000) / timeHr)));
+            if(timeHr == 0){
+                dataToSave.put("AverageSpeed", 0);
+            }
+            else {
+                dataToSave.put("AverageSpeed", Double.parseDouble(f.format((newDistance / 1000) / timeHr)));
+            }
         }
         dataToSave.put("Time", total);
         dataToSave.put("Alerts", alerts);
         dataToSave.put("Distance", distanceCovered.getText().toString());
+        if(location != null) {
+            dataToSave.put("Longitude", location.getLongitude());
+            dataToSave.put("Latitude", location.getLatitude());
+        }
+
         db.collection("MobToWeb").document(userName).set(dataToSave).addOnSuccessListener(new OnSuccessListener<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
@@ -279,5 +323,32 @@ This function will return the street name using the location object
                 Log.w("Hi", "Not Saved");
             }
         });
+    }
+
+
+    public void speak(String localMessage, String localParent){
+        final String localMessage2 = localMessage;
+        final String localParent2 = localParent;
+            tts = new TextToSpeech(startDriving.this, new TextToSpeech.OnInitListener() {
+
+                @Override
+                public void onInit(int status) {
+                    if (status == TextToSpeech.SUCCESS) {
+                        int result = tts.setLanguage(Locale.US);
+                        if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                            Log.e("error", "This Language is not supported");
+                        } else {
+                            if (message != null || !("".equals(message))) {
+                                tts.speak("From " + localParent2 + ", " + localMessage2, TextToSpeech.QUEUE_FLUSH, null);
+                            }
+                        }
+                    }
+                    else {
+                        Log.e("error", "Initilization Failed!");
+                    }
+                }
+
+            });
+
     }
 }
