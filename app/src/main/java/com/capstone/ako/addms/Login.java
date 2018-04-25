@@ -29,8 +29,9 @@ public class Login extends AppCompatActivity {
         final SharedPreferences login_Data = PreferenceManager.getDefaultSharedPreferences(this);
 
         if (login_Data.getString("userName",null) != null ) {
-            startActivity(new Intent(Login.this,accountHomePage.class));
             finish();
+            startActivity(new Intent(Login.this,accountHomePage.class));
+
         }
 
 

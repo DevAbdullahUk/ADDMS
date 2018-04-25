@@ -57,11 +57,13 @@ public class accountHomePage extends AppCompatActivity {
 
 
     public void account(View view) {
+        finish();
         startActivity(new Intent(accountHomePage.this, accountScreen.class));
     }
 
 
     public void drivingScreen(View view) {
+        finish();
         startActivity(new Intent(accountHomePage.this, startDriving.class));
     }
 

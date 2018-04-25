@@ -192,9 +192,9 @@ public class accountScreen extends AppCompatActivity {
         final SharedPreferences.Editor userName_Pref = login_Data.edit();
         userName_Pref.putString("userName", null);
         userName_Pref.commit(); // close editor
-
-        startActivity(new Intent(accountScreen.this,Login.class));
         finish();
+        startActivity(new Intent(accountScreen.this,Login.class));
+
 
     }
     /*

@@ -207,6 +207,7 @@ public class startDriving extends AppCompatActivity implements LocationListener{
         fb_data(true, location1);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         verification.saveTripHistoy(alerts, Double.parseDouble(f.format(newDistance/1000)), total,Double.parseDouble(f.format((newDistance / 1000) / (total * 0.0166667))),userName);
+        finish();
         startActivity(new Intent(startDriving.this, accountHomePage.class));
     }
 
