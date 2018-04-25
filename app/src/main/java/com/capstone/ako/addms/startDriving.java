@@ -206,7 +206,7 @@ public class startDriving extends AppCompatActivity implements LocationListener{
         x = true;
         fb_data(true, location1);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        verification.saveTripHistoy(alerts, Double.parseDouble(f.format(newDistance/1000)), total,75,userName);
+        verification.saveTripHistoy(alerts, Double.parseDouble(f.format(newDistance/1000)), total,Double.parseDouble(f.format((newDistance / 1000) / (total * 0.0166667))),userName);
         startActivity(new Intent(startDriving.this, accountHomePage.class));
     }
 
@@ -278,7 +278,7 @@ This function will return the street name using the location object
     // check if the driver is speeding up/down to send an alert
     public void check_Speed(){
 
-        if(Math.abs(finSpeed - initSpeed) > 20){
+        if(Math.abs(finSpeed - initSpeed) > 50){
             alerts++;
             initSpeed = Double.parseDouble(currentSpeed.getText().toString());
             Intent intent = new Intent(getBaseContext(), Alert.class);
